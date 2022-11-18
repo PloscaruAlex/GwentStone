@@ -8,13 +8,18 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 
 public class Card {
+    public enum Type {
+        HERO,
+        MINION,
+        ENVIRONMENT
+    }
     private String name;
     private int mana;
     private String description;
     private ArrayList<String> colors;
     private int attackDamage;
     private int health;
-    private String type;
+    private Type type;
     private boolean isFrozen = false;
 
     public Card() {}
@@ -85,11 +90,11 @@ public class Card {
         this.health = health;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

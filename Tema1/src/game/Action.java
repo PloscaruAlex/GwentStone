@@ -1,6 +1,7 @@
 package game;
 
 import fileio.ActionsInput;
+import fileio.Coordinates;
 
 public class Action {
     private String command;
@@ -9,6 +10,8 @@ public class Action {
     private int x;
     private int y;
     private int affectedRow;
+    private Coordinates cardAttacker;
+    private Coordinates cardAttacked;
 
     public Action(ActionsInput action) {
         this.command = new String(action.getCommand());
@@ -17,6 +20,8 @@ public class Action {
         this.x = action.getX();
         this.y = action.getY();
         this.affectedRow = action.getAffectedRow();
+        this.cardAttacked = action.getCardAttacked();
+        this.cardAttacker = action.getCardAttacker();
     }
 
     public int getHandIdx() {
@@ -65,5 +70,21 @@ public class Action {
 
     public void setAffectedRow(int affectedRow) {
         this.affectedRow = affectedRow;
+    }
+
+    public Coordinates getCardAttacker() {
+        return cardAttacker;
+    }
+
+    public void setCardAttacker(Coordinates cardAttacker) {
+        this.cardAttacker = cardAttacker;
+    }
+
+    public Coordinates getCardAttacked() {
+        return cardAttacked;
+    }
+
+    public void setCardAttacked(Coordinates cardAttacked) {
+        this.cardAttacked = cardAttacked;
     }
 }

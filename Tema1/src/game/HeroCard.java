@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class HeroCard extends Card {
     private int health = 30;
-    private String type = "hero";
+    private Type type = Type.HERO;
 
     @Override
     public int getHealth() {
@@ -19,12 +19,12 @@ public class HeroCard extends Card {
     }
 
     @Override
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
     @Override
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 

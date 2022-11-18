@@ -4,7 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ErrorOutput {
-    static public ObjectNode environmentCardPlace(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode environmentCardPlace(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("handIdx", action.getHandIdx());
@@ -13,7 +14,8 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode notEnoughMana(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode notEnoughMana(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("handIdx", action.getHandIdx());
@@ -22,7 +24,8 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode rowIsFull(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode rowIsFull(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("handIdx", action.getHandIdx());
@@ -31,17 +34,19 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode noCardAtPosition(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode noCardAtPosition(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("x", action.getX());
         err.put("y", action.getY());
-        err.put("error", "No card at that position.");
+        err.put("output", "No card available at that position.");
 
         return err;
     }
 
-    static public ObjectNode cardNotEnvironment(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode cardNotEnvironment(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("handIdx", action.getHandIdx());
@@ -51,7 +56,8 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode notEnoughManaEnvironment(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode notEnoughManaEnvironment(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("handIdx", action.getHandIdx());
@@ -61,7 +67,8 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode notEnemyRow(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode notEnemyRow(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("handIdx", action.getHandIdx());
@@ -71,12 +78,108 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode cannotSteal(ObjectMapper objectMapper, Action action) {
+    static public ObjectNode cannotSteal(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
         err.put("handIdx", action.getHandIdx());
         err.put("affectedRow", action.getAffectedRow());
         err.put("error", "Cannot steal enemy card since the player's row is full.");
+
+        return err;
+    }
+
+    static public ObjectNode attackedOwnCard(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        ObjectNode coordsAttacked = objectMapper.createObjectNode();
+        coordsAttacked.put("x", action.getCardAttacked().getX());
+        coordsAttacked.put("y", action.getCardAttacked().getY());
+        err.set("cardAttacked", coordsAttacked);
+        err.put("error", "Attacked card does not belong to the enemy.");
+
+        return err;
+    }
+
+    static public ObjectNode cardAlreadyAttacked(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        ObjectNode coordsAttacked = objectMapper.createObjectNode();
+        coordsAttacked.put("x", action.getCardAttacked().getX());
+        coordsAttacked.put("y", action.getCardAttacked().getY());
+        err.set("cardAttacked", coordsAttacked);
+        err.put("error", "Attacker card has already attacked this turn.");
+
+        return err;
+    }
+
+    static public ObjectNode cardIsFrozen(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        ObjectNode coordsAttacked = objectMapper.createObjectNode();
+        coordsAttacked.put("x", action.getCardAttacked().getX());
+        coordsAttacked.put("y", action.getCardAttacked().getY());
+        err.set("cardAttacked", coordsAttacked);
+        err.put("error", "Attacker card is frozen.");
+
+        return err;
+    }
+
+    static public ObjectNode cardNotTank(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        ObjectNode coordsAttacked = objectMapper.createObjectNode();
+        coordsAttacked.put("x", action.getCardAttacked().getX());
+        coordsAttacked.put("y", action.getCardAttacked().getY());
+        err.set("cardAttacked", coordsAttacked);
+        err.put("error", "Attacked card is not of type 'Tank'.");
+
+        return err;
+    }
+
+    static public ObjectNode attackedEnemyCard(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        ObjectNode coordsAttacked = objectMapper.createObjectNode();
+        coordsAttacked.put("x", action.getCardAttacked().getX());
+        coordsAttacked.put("y", action.getCardAttacked().getY());
+        err.set("cardAttacked", coordsAttacked);
+        err.put("error", "Attacked card does not belong to the current player.");
 
         return err;
     }

@@ -5,10 +5,9 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class EnvironmentCard extends Card {
-    private String type = "environment";
+    private Type type = Type.ENVIRONMENT;
 
     public EnvironmentCard() {}
 
@@ -20,12 +19,12 @@ public class EnvironmentCard extends Card {
     }
 
     @Override
-    public String getType() {
+    public Type getType() {
         return type;
     }
 
     @Override
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -56,9 +55,9 @@ public class EnvironmentCard extends Card {
         }
     }
 
-    public int useHeartHound(ObjectMapper objectMapper, ArrayNode output, Action action, ArrayList<ArrayList<MinionCard>> gameTable) {
+    public int useHeartHound(ArrayNode output, Action action, ArrayList<ArrayList<MinionCard>> gameTable) {
         if (gameTable.get(3 - action.getAffectedRow()).size() == 5)  {
-            output.add(ErrorOutput.cannotSteal(objectMapper, action));
+            output.add(ErrorOutput.cannotSteal(action));
             return 1;
         } else {
             int maxHealthIndex = 0;
@@ -73,5 +72,39 @@ public class EnvironmentCard extends Card {
             gameTable.get(action.getAffectedRow()).remove(maxHealthIndex);
             return 0;
         }
+    }
+
+    public int useEnvironmentAbility(ArrayNode output, Action action, ArrayList<ArrayList<MinionCard>> gameTable) {
+        switch (this.getName()) {
+            case "Winterfell":
+                for (MinionCard card : gameTable.get(action.getAffectedRow())) {
+                    card.setFrozen(true);
+                }
+                return 0;
+            case "Firestorm":
+                for (MinionCard card : gameTable.get(action.getAffectedRow())) {
+                    card.setHealth(card.getHealth() - 1);
+                }
+                gameTable.get(action.getAffectedRow()).removeIf(card -> (card.getHealth() == 0));
+                return 0;
+            case "Heart Hound":
+                if (gameTable.get(3 - action.getAffectedRow()).size() == 5)  {
+                    output.add(ErrorOutput.cannotSteal(action));
+                    return 1;
+                } else {
+                    int maxHealthIndex = 0;
+                    int maxHealth = 0;
+                    for (MinionCard card : gameTable.get(action.getAffectedRow())) {
+                        if (card.getHealth() > maxHealth) {
+                            maxHealth = card.getHealth();
+                            maxHealthIndex = gameTable.get(action.getAffectedRow()).indexOf(card);
+                        }
+                    }
+                    gameTable.get(3 - action.getAffectedRow()).add(new MinionCard(gameTable.get(action.getAffectedRow()).get(maxHealthIndex)));
+                    gameTable.get(action.getAffectedRow()).remove(maxHealthIndex);
+                    return 0;
+                }
+        }
+        return 0;
     }
 }
