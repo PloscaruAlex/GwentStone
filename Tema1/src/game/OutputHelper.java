@@ -3,12 +3,17 @@ package game;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import elements.Card;
+import elements.HeroCard;
+import elements.MinionCard;
 
 import java.util.ArrayList;
 
 public class OutputHelper {
-    static public ObjectNode getPlayerDeck(Action action, ArrayList<Card> currentDeck) {
-        //make new object here so i dont have to pass it by parameter and it is collected by the garbage collector
+    public static ObjectNode getPlayerDeck(final Action action,
+                                           final ArrayList<Card> currentDeck) {
+        //make new object here so i don't have to pass it by
+        //parameter and it is collected by the garbage collector
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -22,7 +27,7 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getPlayerHero(Action action, HeroCard heroCard) {
+    public static ObjectNode getPlayerHero(final Action action, final HeroCard heroCard) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -32,7 +37,7 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getPlayerTurn(Action action, int playerTurn) {
+    public static ObjectNode getPlayerTurn(final Action action, final int playerTurn) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -41,7 +46,7 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getCardsInHand(Action action, ArrayList<Card> hand) {
+    public static ObjectNode getCardsInHand(final Action action, final ArrayList<Card> hand) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -55,7 +60,7 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getPlayerMana(Action action, int mana) {
+    public static ObjectNode getPlayerMana(final Action action, final int mana) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -65,7 +70,8 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getCardsOnTable(Action action, ArrayList<ArrayList<MinionCard>> gameTable) {
+    public static ObjectNode getCardsOnTable(final Action action,
+                                             final ArrayList<ArrayList<MinionCard>> gameTable) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         ArrayNode table = objectMapper.createArrayNode();
@@ -83,7 +89,8 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getEnvironmentCardsInHand(Action action, ArrayList<Card> hand) {
+    public static ObjectNode getEnvironmentCardsInHand(final Action action,
+                                                       final ArrayList<Card> hand) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -99,18 +106,21 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getCardAtPosition(Action action, ArrayList<ArrayList<MinionCard>> gameTable) {
+    public static ObjectNode getCardAtPosition(final Action action,
+                                               final ArrayList<ArrayList<MinionCard>> gameTable) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
         node.put("x", action.getX());
         node.put("y", action.getY());
-        node.set("output", gameTable.get(action.getX()).get(action.getY()).cardOutput(objectMapper));
+        node.set("output",
+                gameTable.get(action.getX()).get(action.getY()).cardOutput(objectMapper));
 
         return node;
     }
 
-    static public ObjectNode getFrozenCardsOnTable(Action action, ArrayList<ArrayList<MinionCard>> gameTable) {
+    public static ObjectNode getFrozenCardsOnTable(
+            final Action action, final ArrayList<ArrayList<MinionCard>> gameTable) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         ArrayNode frozenCards = objectMapper.createArrayNode();
@@ -127,21 +137,21 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode playerOneWin() {
+    public static ObjectNode playerOneWin() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("gameEnded", "Player one killed the enemy hero.");
         return node;
     }
 
-    static public ObjectNode playerTwoWin() {
+    public static ObjectNode playerTwoWin() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("gameEnded", "Player two killed the enemy hero.");
         return node;
     }
 
-    static public ObjectNode getTotalGamesPlayed(int gamesPlayedUntilNow) {
+    public static ObjectNode getTotalGamesPlayed(final int gamesPlayedUntilNow) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", "getTotalGamesPlayed");
@@ -150,7 +160,7 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getPlayerOneWins(int playerOneNumberOfWins) {
+    public static ObjectNode getPlayerOneWins(final int playerOneNumberOfWins) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", "getPlayerOneWins");
@@ -159,7 +169,7 @@ public class OutputHelper {
         return node;
     }
 
-    static public ObjectNode getPlayerTwoWins(int playerTwoNumberOfWins) {
+    public static ObjectNode getPlayerTwoWins(final int playerTwoNumberOfWins) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", "getPlayerTwoWins");

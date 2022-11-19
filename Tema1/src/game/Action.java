@@ -3,7 +3,7 @@ package game;
 import fileio.ActionsInput;
 import fileio.Coordinates;
 
-public class Action {
+public final class Action {
     private String command;
     private int playerIdx;
     private int handIdx;
@@ -13,7 +13,7 @@ public class Action {
     private Coordinates cardAttacker;
     private Coordinates cardAttacked;
 
-    public Action(ActionsInput action) {
+    public Action(final ActionsInput action) {
         this.command = new String(action.getCommand());
         this.playerIdx = action.getPlayerIdx();
         this.handIdx = action.getHandIdx();
@@ -28,7 +28,7 @@ public class Action {
         return handIdx;
     }
 
-    public void setHandIdx(int handIdx) {
+    public void setHandIdx(final int handIdx) {
         this.handIdx = handIdx;
     }
 
@@ -36,7 +36,7 @@ public class Action {
         return command;
     }
 
-    public void setCommand(String command) {
+    public void setCommand(final String command) {
         this.command = command;
     }
 
@@ -44,7 +44,7 @@ public class Action {
         return playerIdx;
     }
 
-    public void setPlayerIdx(int playerIdx) {
+    public void setPlayerIdx(final int playerIdx) {
         this.playerIdx = playerIdx;
     }
 
@@ -52,7 +52,7 @@ public class Action {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(final int x) {
         this.x = x;
     }
 
@@ -60,7 +60,7 @@ public class Action {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(final int y) {
         this.y = y;
     }
 
@@ -68,7 +68,7 @@ public class Action {
         return affectedRow;
     }
 
-    public void setAffectedRow(int affectedRow) {
+    public void setAffectedRow(final int affectedRow) {
         this.affectedRow = affectedRow;
     }
 
@@ -76,7 +76,7 @@ public class Action {
         return cardAttacker;
     }
 
-    public void setCardAttacker(Coordinates cardAttacker) {
+    public void setCardAttacker(final Coordinates cardAttacker) {
         this.cardAttacker = cardAttacker;
     }
 
@@ -84,7 +84,7 @@ public class Action {
         return cardAttacked;
     }
 
-    public void setCardAttacked(Coordinates cardAttacked) {
+    public void setCardAttacked(final Coordinates cardAttacked) {
         this.cardAttacked = cardAttacked;
     }
 }

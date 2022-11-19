@@ -1,4 +1,4 @@
-package game;
+package elements;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.ArrayList;
 
-public class HeroCard extends Card {
+public final class HeroCard extends Card {
     private int health = 30;
     private Type type = Type.HERO;
     private boolean hasAttackedThisTurn = false;
@@ -17,7 +17,7 @@ public class HeroCard extends Card {
     }
 
     @Override
-    public void setHealth(int health) {
+    public void setHealth(final int health) {
         this.health = health;
     }
 
@@ -27,7 +27,7 @@ public class HeroCard extends Card {
     }
 
     @Override
-    public void setType(Type type) {
+    public void setType(final Type type) {
         this.type = type;
     }
 
@@ -35,12 +35,12 @@ public class HeroCard extends Card {
         return this.hasAttackedThisTurn;
     }
 
-    public void setHasAttackedThisTurn(boolean hasAttackedThisTurn) {
+    public void setHasAttackedThisTurn(final boolean hasAttackedThisTurn) {
         this.hasAttackedThisTurn = hasAttackedThisTurn;
     }
 
     @Override
-    public ObjectNode cardOutput(ObjectMapper objectMapper) {
+    public ObjectNode cardOutput(final ObjectMapper objectMapper) {
         ObjectNode objectNode = objectMapper.createObjectNode();
         objectNode.put("mana", this.getMana());
         objectNode.put("health", this.getHealth());
@@ -49,13 +49,13 @@ public class HeroCard extends Card {
         for (String color : this.getColors()) {
             colorsArray.add(color);
         }
-        objectNode.put("colors", colorsArray);
+        objectNode.set("colors", colorsArray);
         objectNode.put("name", this.getName());
 
         return objectNode;
     }
 
-    public void useAbility(ArrayList<MinionCard> row) {
+    public void useAbility(final ArrayList<MinionCard> row) {
         switch (this.getName()) {
             case "Lord Royce":
                 int maxAttackOnRow = 0;
@@ -92,6 +92,8 @@ public class HeroCard extends Card {
                 for (MinionCard card : row) {
                     card.setAttackDamage(card.getAttackDamage() + 1);
                 }
+                break;
+            default:
                 break;
         }
     }

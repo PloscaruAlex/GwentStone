@@ -8,14 +8,13 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import checker.CheckerConstants;
 import fileio.Input;
 
-import game.*;
+import game.CurrentGame;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -76,10 +75,17 @@ public final class Main {
         int gamesPlayedUntilNow = 0;
         int playerOneNumberOfWins = 0;
         int playerTwoNumberOfWins = 0;
-        for (int gameIndex = 0; gameIndex < inputData.getGames().size(); gameIndex++) {
-            CurrentGame currentGame = new CurrentGame(inputData, gameIndex, gamesPlayedUntilNow, playerOneNumberOfWins, playerTwoNumberOfWins);
 
+        for (int gameIndex = 0; gameIndex < inputData.getGames().size(); gameIndex++) {
+            CurrentGame currentGame = new CurrentGame(
+                    inputData,
+                    gameIndex,
+                    gamesPlayedUntilNow,
+                    playerOneNumberOfWins,
+                    playerTwoNumberOfWins
+            );
             currentGame.startCurrentGame(output);
+
             playerOneNumberOfWins = currentGame.getPlayerOne().getNumberOfWins();
             playerTwoNumberOfWins = currentGame.getPlayerTwo().getNumberOfWins();
             gamesPlayedUntilNow++;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 public class ErrorOutput {
-    static public ObjectNode environmentCardPlace(Action action) {
+    public static ObjectNode environmentCardPlace(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -14,7 +14,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode notEnoughMana(Action action) {
+    public static ObjectNode notEnoughMana(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -24,7 +24,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode rowIsFull(Action action) {
+    public static ObjectNode rowIsFull(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -34,7 +34,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode noCardAtPosition(Action action) {
+    public static ObjectNode noCardAtPosition(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -45,7 +45,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode cardNotEnvironment(Action action) {
+    public static ObjectNode cardNotEnvironment(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -56,7 +56,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode notEnoughManaEnvironment(Action action) {
+    public static ObjectNode notEnoughManaEnvironment(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -67,7 +67,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode notEnemyRow(Action action) {
+    public static ObjectNode notEnemyRow(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -78,7 +78,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode cannotSteal(Action action) {
+    public static ObjectNode cannotSteal(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -89,7 +89,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode attackedOwnCard(Action action) {
+    public static ObjectNode attackedOwnCard(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -108,7 +108,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode cardAlreadyAttacked(Action action) {
+    public static ObjectNode cardAlreadyAttacked(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -127,7 +127,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode cardIsFrozen(Action action) {
+    public static ObjectNode cardIsFrozen(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -146,7 +146,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode cardNotTank(Action action) {
+    public static ObjectNode cardNotTank(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -165,7 +165,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode attackedEnemyCard(Action action) {
+    public static ObjectNode attackedEnemyCard(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -184,7 +184,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode attackHeroCardIsFrozen(Action action) {
+    public static ObjectNode attackHeroCardIsFrozen(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -199,7 +199,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode attackHeroCardAlreadyAttacked(Action action) {
+    public static ObjectNode attackHeroCardAlreadyAttacked(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -214,7 +214,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode attackHeroCardNotTank(Action action) {
+    public static ObjectNode attackHeroCardNotTank(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -229,7 +229,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode heroAbilityNotEnoughMana(Action action) {
+    public static ObjectNode heroAbilityNotEnoughMana(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -240,7 +240,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode heroAbilityAlreadyAttacked(Action action) {
+    public static ObjectNode heroAbilityAlreadyAttacked(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -251,7 +251,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode heroAbilityNotEnemyRow(Action action) {
+    public static ObjectNode heroAbilityNotEnemyRow(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());
@@ -262,7 +262,7 @@ public class ErrorOutput {
         return err;
     }
 
-    static public ObjectNode heroAbilityNotOwnRow(Action action) {
+    public static ObjectNode heroAbilityNotOwnRow(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
         err.put("command", action.getCommand());

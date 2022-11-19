@@ -1,4 +1,4 @@
-package game;
+package elements;
 
 import fileio.CardInput;
 
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import static java.util.Collections.shuffle;
 
-public class Player {
+public final class Player {
     private HeroCard heroCard;
     private ArrayList<ArrayList<Card>> decks;
     private ArrayList<Card> currentDeck;
@@ -20,7 +20,7 @@ public class Player {
         return hasTankOnTable;
     }
 
-    public void setHasTankOnTable(boolean hasTankOnTable) {
+    public void setHasTankOnTable(final boolean hasTankOnTable) {
         this.hasTankOnTable = hasTankOnTable;
     }
 
@@ -28,7 +28,7 @@ public class Player {
         return isTurnEnded;
     }
 
-    public void setTurnEnded(boolean turnEnded) {
+    public void setTurnEnded(final boolean turnEnded) {
         isTurnEnded = turnEnded;
     }
 
@@ -36,16 +36,12 @@ public class Player {
         return mana;
     }
 
-    public void setMana(int mana) {
+    public void setMana(final int mana) {
         this.mana = mana;
     }
 
     public ArrayList<Card> getHand() {
         return hand;
-    }
-
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
     }
 
     public HeroCard getHeroCard() {
@@ -60,24 +56,20 @@ public class Player {
         return currentDeck;
     }
 
-    public void setCurrentDeck(ArrayList<Card> currentDeck) {
-        this.currentDeck = currentDeck;
-    }
-
     public int getNumberOfWins() {
         return numberOfWins;
     }
 
-    public void setNumberOfWins(int numberOfWins) {
+    public void setNumberOfWins(final int numberOfWins) {
         this.numberOfWins = numberOfWins;
     }
 
-    public void setHeroCard(CardInput hero) {
+    public void setHeroCard(final CardInput hero) {
         this.heroCard = new HeroCard();
         this.heroCard.copyFromCardInput(hero);
     }
 
-    public void setDecks(ArrayList<ArrayList<CardInput>> decks) {
+    public void setDecks(final ArrayList<ArrayList<CardInput>> decks) {
         this.decks = new ArrayList<ArrayList<Card>>();
         for (ArrayList<CardInput> deck : decks) {
             ArrayList<Card> cards = new ArrayList<Card>();
@@ -98,7 +90,7 @@ public class Player {
         }
     }
 
-    public void setCurrentDeckAtIndex(int index, int shuffle) {
+    public void setCurrentDeckAtIndex(final int index, final int shuffle) {
         this.currentDeck = this.getDecks().get(index);
         Random random = new Random();
         random.setSeed(shuffle);

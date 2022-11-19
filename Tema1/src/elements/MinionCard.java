@@ -1,10 +1,10 @@
-package game;
+package elements;
 
 import fileio.CardInput;
 
 import java.util.ArrayList;
 
-public class MinionCard extends Card {
+public final class MinionCard extends Card {
     public enum Row {
         FRONT,
         BACK
@@ -14,9 +14,10 @@ public class MinionCard extends Card {
     private boolean isTank = false;
     private boolean hasAttackedThisTurn = false;
 
-    public MinionCard() {}
+    public MinionCard() {
+    }
 
-    public MinionCard(Card card) {
+    public MinionCard(final Card card) {
         this.setName(new String(card.getName()));
         this.setDescription(new String(card.getDescription()));
         this.setColors(new ArrayList<String>(card.getColors()));
@@ -46,7 +47,7 @@ public class MinionCard extends Card {
     }
 
     @Override
-    public void setType(Type type) {
+    public void setType(final Type type) {
         this.type = type;
     }
 
@@ -54,7 +55,7 @@ public class MinionCard extends Card {
         return this.row;
     }
 
-    public void setRow(Row row) {
+    public void setRow(final Row row) {
         this.row = row;
     }
 
@@ -62,7 +63,7 @@ public class MinionCard extends Card {
         return this.isTank;
     }
 
-    public void setTank(boolean tank) {
+    public void setTank(final boolean tank) {
         this.isTank = tank;
     }
 
@@ -70,12 +71,12 @@ public class MinionCard extends Card {
         return hasAttackedThisTurn;
     }
 
-    public void setHasAttackedThisTurn(boolean hasAttackedThisTurn) {
+    public void setHasAttackedThisTurn(final boolean hasAttackedThisTurn) {
         this.hasAttackedThisTurn = hasAttackedThisTurn;
     }
 
     @Override
-    public void copyFromCardInput(CardInput card) {
+    public void copyFromCardInput(final CardInput card) {
         this.setName(new String(card.getName()));
         this.setDescription(new String(card.getDescription()));
         this.setColors(new ArrayList<String>(card.getColors()));
@@ -98,7 +99,7 @@ public class MinionCard extends Card {
         }
     }
 
-    public void useAbility(MinionCard card) {
+    public void useAbility(final MinionCard card) {
         int temporary;
         switch (this.getName()) {
             case "Disciple":
@@ -120,6 +121,8 @@ public class MinionCard extends Card {
                 temporary = card.getHealth();
                 card.setHealth(card.getAttackDamage());
                 card.setAttackDamage(temporary);
+                break;
+            default:
                 break;
         }
     }

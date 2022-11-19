@@ -3,10 +3,14 @@ package game;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.ActionsInput;
 import fileio.Input;
+import elements.Card;
+import elements.EnvironmentCard;
+import elements.MinionCard;
+import elements.Player;
 
 import java.util.ArrayList;
 
-public class CurrentGame {
+public final class CurrentGame {
     private Player playerOne;
     private Player playerTwo;
     private int startingPlayer;
@@ -19,17 +23,35 @@ public class CurrentGame {
     private boolean isEnded = false;
     private int gamesPlayedUntilNow;
 
-    public CurrentGame(Input inputData, int gameIndex, int gamesPlayedUntilNow, int playerOneNumberOfWins, int playerTwoNumberOfWins) {
-        this.setStartingPlayer(inputData.getGames().get(gameIndex).getStartGame().getStartingPlayer());
+    public CurrentGame(
+            final Input inputData,
+            final int gameIndex,
+            final int gamesPlayedUntilNow,
+            final int playerOneNumberOfWins,
+            final int playerTwoNumberOfWins
+    ) {
+        this.setStartingPlayer(
+                inputData.getGames().get(gameIndex).getStartGame().getStartingPlayer()
+        );
         this.setShuffleSeed(inputData.getGames().get(gameIndex).getStartGame().getShuffleSeed());
         this.setPlayerOne(new Player());
         this.getPlayerOne().setDecks(inputData.getPlayerOneDecks().getDecks());
         this.setPlayerTwo(new Player());
         this.getPlayerTwo().setDecks(inputData.getPlayerTwoDecks().getDecks());
-        this.getPlayerOne().setCurrentDeckAtIndex(inputData.getGames().get(gameIndex).getStartGame().getPlayerOneDeckIdx(), this.getShuffleSeed());
-        this.getPlayerTwo().setCurrentDeckAtIndex(inputData.getGames().get(gameIndex).getStartGame().getPlayerTwoDeckIdx(), this.getShuffleSeed());
-        this.getPlayerOne().setHeroCard(inputData.getGames().get(gameIndex).getStartGame().getPlayerOneHero());
-        this.getPlayerTwo().setHeroCard(inputData.getGames().get(gameIndex).getStartGame().getPlayerTwoHero());
+        this.getPlayerOne().setCurrentDeckAtIndex(
+                inputData.getGames().get(gameIndex).getStartGame().getPlayerOneDeckIdx(),
+                this.getShuffleSeed()
+        );
+        this.getPlayerTwo().setCurrentDeckAtIndex(
+                inputData.getGames().get(gameIndex).getStartGame().getPlayerTwoDeckIdx(),
+                this.getShuffleSeed()
+        );
+        this.getPlayerOne().setHeroCard(
+                inputData.getGames().get(gameIndex).getStartGame().getPlayerOneHero()
+        );
+        this.getPlayerTwo().setHeroCard(
+                inputData.getGames().get(gameIndex).getStartGame().getPlayerTwoHero()
+        );
         this.setGameTable(new ArrayList<ArrayList<MinionCard>>());
         for (int counter = 0; counter < 4; counter++) {
             this.getGameTable().add(new ArrayList<MinionCard>());
@@ -43,11 +65,14 @@ public class CurrentGame {
         this.getPlayerTwo().setNumberOfWins(playerTwoNumberOfWins);
     }
 
+    public CurrentGame() {
+    }
+
     public ArrayList<ArrayList<MinionCard>> getGameTable() {
         return gameTable;
     }
 
-    public void setGameTable(ArrayList<ArrayList<MinionCard>> gameTable) {
+    public void setGameTable(final ArrayList<ArrayList<MinionCard>> gameTable) {
         this.gameTable = gameTable;
     }
 
@@ -55,7 +80,7 @@ public class CurrentGame {
         return shuffleSeed;
     }
 
-    public void setShuffleSeed(int shuffleSeed) {
+    public void setShuffleSeed(final int shuffleSeed) {
         this.shuffleSeed = shuffleSeed;
     }
 
@@ -63,7 +88,7 @@ public class CurrentGame {
         return playerTurn;
     }
 
-    public void setPlayerTurn(int playerTurn) {
+    public void setPlayerTurn(final int playerTurn) {
         this.playerTurn = playerTurn;
     }
 
@@ -71,7 +96,7 @@ public class CurrentGame {
         return playerOne;
     }
 
-    public void setPlayerOne(Player playerOne) {
+    public void setPlayerOne(final Player playerOne) {
         this.playerOne = playerOne;
     }
 
@@ -79,7 +104,7 @@ public class CurrentGame {
         return playerTwo;
     }
 
-    public void setPlayerTwo(Player playerTwo) {
+    public void setPlayerTwo(final Player playerTwo) {
         this.playerTwo = playerTwo;
     }
 
@@ -87,7 +112,7 @@ public class CurrentGame {
         return startingPlayer;
     }
 
-    public void setStartingPlayer(int startingPlayer) {
+    public void setStartingPlayer(final int startingPlayer) {
         this.startingPlayer = startingPlayer;
         this.playerTurn = startingPlayer;
     }
@@ -96,7 +121,7 @@ public class CurrentGame {
         return actions;
     }
 
-    public void setActions(ArrayList<Action> actions) {
+    public void setActions(final ArrayList<Action> actions) {
         this.actions = actions;
     }
 
@@ -104,7 +129,7 @@ public class CurrentGame {
         return manaForEachRound;
     }
 
-    public void setManaForEachRound(int manaForEachRound) {
+    public void setManaForEachRound(final int manaForEachRound) {
         this.manaForEachRound = manaForEachRound;
     }
 
@@ -112,7 +137,7 @@ public class CurrentGame {
         return roundNumber;
     }
 
-    public void setRoundNumber(int roundNumber) {
+    public void setRoundNumber(final int roundNumber) {
         this.roundNumber = roundNumber;
     }
 
@@ -120,7 +145,7 @@ public class CurrentGame {
         return this.isEnded;
     }
 
-    public void setEnded(boolean ended) {
+    public void setEnded(final boolean ended) {
         this.isEnded = ended;
     }
 
@@ -128,11 +153,11 @@ public class CurrentGame {
         return gamesPlayedUntilNow;
     }
 
-    public void setGamesPlayedUntilNow(int gamesPlayedUntilNow) {
+    public void setGamesPlayedUntilNow(final int gamesPlayedUntilNow) {
         this.gamesPlayedUntilNow = gamesPlayedUntilNow;
     }
 
-    private void placeCard(ArrayNode output, Action action, Player player) {
+    private void placeCard(final ArrayNode output, final Action action, final Player player) {
         Card cardToBePlaced = player.getHand().get(action.getHandIdx());
         if (cardToBePlaced.getType() == Card.Type.ENVIRONMENT) {
             output.add(ErrorOutput.environmentCardPlace(action));
@@ -152,7 +177,7 @@ public class CurrentGame {
                 return;
             }
 
-            if(minionToBePlaced.isTank()) {
+            if (minionToBePlaced.isTank()) {
                 player.setHasTankOnTable(true);
             }
             player.setMana(player.getMana() - minionToBePlaced.getMana());
@@ -171,7 +196,11 @@ public class CurrentGame {
         }
     }
 
-    private void useEnvironmentCard(ArrayNode output, Action action, Player player) {
+    private void useEnvironmentCard(
+            final ArrayNode output,
+            final Action action,
+            final Player player
+    ) {
         Card cardToBeUsed = player.getHand().get(action.getHandIdx());
         if (cardToBeUsed.getType() == Card.Type.MINION) {
             output.add(ErrorOutput.cardNotEnvironment(action));
@@ -190,7 +219,11 @@ public class CurrentGame {
             return;
         }
 
-        int isUsed = environmentToBeUsed.useEnvironmentAbility(output, action, this.getGameTable());
+        int isUsed = environmentToBeUsed.useEnvironmentAbility(
+                output,
+                action,
+                this.getGameTable()
+        );
         if (isUsed == 0) {
             player.setMana(player.getMana() - environmentToBeUsed.getMana());
             player.getHand().remove(action.getHandIdx());
@@ -225,14 +258,21 @@ public class CurrentGame {
         }
     }
 
-    private void cardUsesAttack(ArrayNode output, Action action, Player attackedPlayer) {
+    private void cardUsesAttack(
+            final ArrayNode output,
+            final Action action,
+            final Player attackedPlayer
+    ) {
         int frontRow = this.getPlayerTurn() == 1 ? 2 : 1;
         int backRow = this.getPlayerTurn() == 1 ? 3 : 0;
 
-        MinionCard cardAttacked = this.getGameTable().get(action.getCardAttacked().getX()).get(action.getCardAttacked().getY());
-        MinionCard cardAttacker = this.getGameTable().get(action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
+        MinionCard cardAttacked = this.getGameTable()
+                .get(action.getCardAttacked().getX()).get(action.getCardAttacked().getY());
+        MinionCard cardAttacker = this.getGameTable()
+                .get(action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
 
-        if (action.getCardAttacked().getX() == frontRow || action.getCardAttacked().getX() == backRow) {
+        if (action.getCardAttacked().getX() == frontRow
+                || action.getCardAttacked().getX() == backRow) {
             output.add(ErrorOutput.attackedOwnCard(action));
             return;
         }
@@ -262,12 +302,18 @@ public class CurrentGame {
         cardAttacker.setHasAttackedThisTurn(true);
     }
 
-    private void cardUsesAbility(ArrayNode output, Action action, Player attackedPlayer) {
+    private void cardUsesAbility(
+            final ArrayNode output,
+            final Action action,
+            final Player attackedPlayer
+    ) {
         int frontRow = this.getPlayerTurn() == 1 ? 2 : 1;
         int backRow = this.getPlayerTurn() == 1 ? 3 : 0;
 
-        MinionCard cardAttacked = this.getGameTable().get(action.getCardAttacked().getX()).get(action.getCardAttacked().getY());
-        MinionCard cardAttacker = this.getGameTable().get(action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
+        MinionCard cardAttacked = this.getGameTable()
+                .get(action.getCardAttacked().getX()).get(action.getCardAttacked().getY());
+        MinionCard cardAttacker = this.getGameTable()
+                .get(action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
 
         if (cardAttacker.isFrozen()) {
             output.add(ErrorOutput.cardIsFrozen(action));
@@ -280,14 +326,16 @@ public class CurrentGame {
         }
 
         if (cardAttacker.getName().equals("Disciple")) {
-            if (action.getCardAttacked().getX() != frontRow && action.getCardAttacked().getX() != backRow) {
+            if (action.getCardAttacked().getX() != frontRow
+                    && action.getCardAttacked().getX() != backRow) {
                 output.add(ErrorOutput.attackedEnemyCard(action));
                 return;
             }
         }
 
         if (!(cardAttacker.getName().equals("Disciple"))) {
-            if (action.getCardAttacked().getX() == frontRow || action.getCardAttacked().getX() == backRow) {
+            if (action.getCardAttacked().getX() == frontRow
+                    || action.getCardAttacked().getX() == backRow) {
                 output.add(ErrorOutput.attackedOwnCard(action));
                 return;
             }
@@ -307,8 +355,13 @@ public class CurrentGame {
         cardAttacker.setHasAttackedThisTurn(true);
     }
 
-    private void useAttackHero(ArrayNode output, Action action, Player attackedPlayer) {
-        MinionCard cardAttacker = this.getGameTable().get(action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
+    private void useAttackHero(
+            final ArrayNode output,
+            final Action action,
+            final Player attackedPlayer
+    ) {
+        MinionCard cardAttacker = this.getGameTable()
+                .get(action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
 
         if (cardAttacker.isFrozen()) {
             output.add(ErrorOutput.attackHeroCardIsFrozen(action));
@@ -325,7 +378,8 @@ public class CurrentGame {
             return;
         }
 
-        attackedPlayer.getHeroCard().setHealth(attackedPlayer.getHeroCard().getHealth() - cardAttacker.getAttackDamage());
+        attackedPlayer.getHeroCard().setHealth(
+                attackedPlayer.getHeroCard().getHealth() - cardAttacker.getAttackDamage());
         cardAttacker.setHasAttackedThisTurn(true);
         if (attackedPlayer.getHeroCard().getHealth() <= 0) {
             this.setEnded(true);
@@ -341,7 +395,11 @@ public class CurrentGame {
         }
     }
 
-    private void useHeroAbility(ArrayNode output, Action action, Player attackingPlayer) {
+    private void useHeroAbility(
+            final ArrayNode output,
+            final Action action,
+            final Player attackingPlayer
+    ) {
         int frontRow = this.getPlayerTurn() == 1 ? 2 : 1;
         int backRow = this.getPlayerTurn() == 1 ? 3 : 0;
 
@@ -371,25 +429,31 @@ public class CurrentGame {
             }
         }
 
-        attackingPlayer.getHeroCard().useAbility(this.getGameTable().get(action.getAffectedRow()));
+        attackingPlayer.getHeroCard().useAbility(
+                this.getGameTable().get(action.getAffectedRow()));
         attackingPlayer.getHeroCard().setHasAttackedThisTurn(true);
-        attackingPlayer.setMana(attackingPlayer.getMana() - attackingPlayer.getHeroCard().getMana());
+        attackingPlayer.setMana(
+                attackingPlayer.getMana() - attackingPlayer.getHeroCard().getMana());
     }
 
-    private void executeCommand(ArrayNode output, Action action) {
+    private void executeCommand(final ArrayNode output, final Action action) {
         switch (action.getCommand()) {
             case "getPlayerDeck":
                 if (action.getPlayerIdx() == 1) {
-                    output.add(OutputHelper.getPlayerDeck(action, this.getPlayerOne().getCurrentDeck()));
+                    output.add(OutputHelper.getPlayerDeck(
+                            action, this.getPlayerOne().getCurrentDeck()));
                 } else {
-                    output.add(OutputHelper.getPlayerDeck(action, this.getPlayerTwo().getCurrentDeck()));
+                    output.add(OutputHelper.getPlayerDeck(
+                            action, this.getPlayerTwo().getCurrentDeck()));
                 }
                 break;
             case "getPlayerHero":
                 if (action.getPlayerIdx() == 1) {
-                    output.add(OutputHelper.getPlayerHero(action, this.getPlayerOne().getHeroCard()));
+                    output.add(OutputHelper.getPlayerHero(
+                            action, this.getPlayerOne().getHeroCard()));
                 } else {
-                    output.add(OutputHelper.getPlayerHero(action, this.getPlayerTwo().getHeroCard()));
+                    output.add(OutputHelper.getPlayerHero(
+                            action, this.getPlayerTwo().getHeroCard()));
                 }
                 break;
             case "getPlayerTurn":
@@ -407,9 +471,11 @@ public class CurrentGame {
                 break;
             case "getCardsInHand":
                 if (action.getPlayerIdx() == 1) {
-                    output.add(OutputHelper.getCardsInHand(action, this.getPlayerOne().getHand()));
+                    output.add(OutputHelper.getCardsInHand(
+                            action, this.getPlayerOne().getHand()));
                 } else {
-                    output.add(OutputHelper.getCardsInHand(action, this.getPlayerTwo().getHand()));
+                    output.add(OutputHelper.getCardsInHand(
+                            action, this.getPlayerTwo().getHand()));
                 }
                 break;
             case "getPlayerMana":
@@ -424,9 +490,11 @@ public class CurrentGame {
                 break;
             case "getEnvironmentCardsInHand":
                 if (action.getPlayerIdx() == 1) {
-                    output.add(OutputHelper.getEnvironmentCardsInHand(action, this.getPlayerOne().getHand()));
+                    output.add(OutputHelper.getEnvironmentCardsInHand(
+                            action, this.getPlayerOne().getHand()));
                 } else {
-                    output.add(OutputHelper.getEnvironmentCardsInHand(action, this.getPlayerTwo().getHand()));
+                    output.add(OutputHelper.getEnvironmentCardsInHand(
+                            action, this.getPlayerTwo().getHand()));
                 }
                 break;
             case "useEnvironmentCard":
@@ -483,10 +551,12 @@ public class CurrentGame {
             case "getPlayerTwoWins":
                 output.add(OutputHelper.getPlayerTwoWins(this.getPlayerTwo().getNumberOfWins()));
                 break;
+            default:
+                break;
         }
     }
 
-    private void nextRound(ArrayNode output) {
+    private void nextRound() {
         if (this.getPlayerOne().isTurnEnded() && this.getPlayerTwo().isTurnEnded()) {
             this.setRoundNumber(this.getRoundNumber() + 1);
             if (this.getManaForEachRound() < 10) {
@@ -498,31 +568,37 @@ public class CurrentGame {
             this.getPlayerTwo().setTurnEnded(false);
 
             if (this.getPlayerOne().getCurrentDeck().size() != 0) {
-                if (this.getPlayerOne().getCurrentDeck().get(0).getType() == Card.Type.ENVIRONMENT) {
-                    this.getPlayerOne().getHand().add(new EnvironmentCard(this.getPlayerOne().getCurrentDeck().get(0)));
+                if (this.getPlayerOne().getCurrentDeck().get(0).getType()
+                        == Card.Type.ENVIRONMENT) {
+                    this.getPlayerOne().getHand().add(
+                            new EnvironmentCard(this.getPlayerOne().getCurrentDeck().get(0)));
                     this.getPlayerOne().getCurrentDeck().remove(0);
                 } else {
-                    this.getPlayerOne().getHand().add(new MinionCard(this.getPlayerOne().getCurrentDeck().get(0)));
+                    this.getPlayerOne().getHand().add(
+                            new MinionCard(this.getPlayerOne().getCurrentDeck().get(0)));
                     this.getPlayerOne().getCurrentDeck().remove(0);
                 }
             }
             if (this.getPlayerTwo().getCurrentDeck().size() != 0) {
-                if (this.getPlayerTwo().getCurrentDeck().get(0).getType() == Card.Type.ENVIRONMENT) {
-                    this.getPlayerTwo().getHand().add(new EnvironmentCard(this.getPlayerTwo().getCurrentDeck().get(0)));
+                if (this.getPlayerTwo().getCurrentDeck().get(0).getType()
+                        == Card.Type.ENVIRONMENT) {
+                    this.getPlayerTwo().getHand().add(
+                            new EnvironmentCard(this.getPlayerTwo().getCurrentDeck().get(0)));
                     this.getPlayerTwo().getCurrentDeck().remove(0);
                 } else {
-                    this.getPlayerTwo().getHand().add(new MinionCard(this.getPlayerTwo().getCurrentDeck().get(0)));
+                    this.getPlayerTwo().getHand().add(
+                            new MinionCard(this.getPlayerTwo().getCurrentDeck().get(0)));
                     this.getPlayerTwo().getCurrentDeck().remove(0);
                 }
             }
         }
     }
 
-    public void startCurrentGame(ArrayNode output) {
+    public void startCurrentGame(final ArrayNode output) {
         for (Action action : this.getActions()) {
             this.executeCommand(output, action);
             if (!(this.isEnded())) {
-                this.nextRound(output);
+                this.nextRound();
             }
         }
     }
