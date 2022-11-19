@@ -183,4 +183,93 @@ public class ErrorOutput {
 
         return err;
     }
+
+    static public ObjectNode attackHeroCardIsFrozen(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        err.put("error", "Attacker card is frozen.");
+
+        return err;
+    }
+
+    static public ObjectNode attackHeroCardAlreadyAttacked(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        err.put("error", "Attacker card has already attacked this turn.");
+
+        return err;
+    }
+
+    static public ObjectNode attackHeroCardNotTank(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        ObjectNode coordsAttacker = objectMapper.createObjectNode();
+        coordsAttacker.put("x", action.getCardAttacker().getX());
+        coordsAttacker.put("y", action.getCardAttacker().getY());
+        err.set("cardAttacker", coordsAttacker);
+
+        err.put("error", "Attacked card is not of type 'Tank'.");
+
+        return err;
+    }
+
+    static public ObjectNode heroAbilityNotEnoughMana(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        err.put("affectedRow", action.getAffectedRow());
+        err.put("error", "Not enough mana to use hero's ability.");
+
+        return err;
+    }
+
+    static public ObjectNode heroAbilityAlreadyAttacked(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        err.put("affectedRow", action.getAffectedRow());
+        err.put("error", "Hero has already attacked this turn.");
+
+        return err;
+    }
+
+    static public ObjectNode heroAbilityNotEnemyRow(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        err.put("affectedRow", action.getAffectedRow());
+        err.put("error", "Selected row does not belong to the enemy.");
+
+        return err;
+    }
+
+    static public ObjectNode heroAbilityNotOwnRow(Action action) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode err = objectMapper.createObjectNode();
+        err.put("command", action.getCommand());
+
+        err.put("affectedRow", action.getAffectedRow());
+        err.put("error", "Selected row does not belong to the current player.");
+
+        return err;
+    }
 }

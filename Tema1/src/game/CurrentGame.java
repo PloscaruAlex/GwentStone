@@ -16,6 +16,7 @@ public class CurrentGame {
     private ArrayList<Action> actions;
     private int manaForEachRound = 1;
     private int roundNumber = 1;
+    private boolean isEnded = false;
 
     public CurrentGame(Input inputData) {
         this.setStartingPlayer(inputData.getGames().get(0).getStartGame().getStartingPlayer());
@@ -111,6 +112,14 @@ public class CurrentGame {
         this.roundNumber = roundNumber;
     }
 
+    public boolean isEnded() {
+        return this.isEnded;
+    }
+
+    public void setEnded(boolean ended) {
+        this.isEnded = ended;
+    }
+
     private void placeCard(ArrayNode output, Action action, Player player) {
         Card cardToBePlaced = player.getHand().get(action.getHandIdx());
         if (cardToBePlaced.getType() == Card.Type.ENVIRONMENT) {
@@ -188,6 +197,7 @@ public class CurrentGame {
                 card.setFrozen(false);
                 card.setHasAttackedThisTurn(false);
             }
+            this.getPlayerOne().getHeroCard().setHasAttackedThisTurn(false);
         } else {
             this.getPlayerTwo().setTurnEnded(true);
             this.setPlayerTurn(1);
@@ -199,6 +209,7 @@ public class CurrentGame {
                 card.setFrozen(false);
                 card.setHasAttackedThisTurn(false);
             }
+            this.getPlayerTwo().getHeroCard().setHasAttackedThisTurn(false);
         }
     }
 
@@ -282,6 +293,71 @@ public class CurrentGame {
             this.getGameTable().get(action.getCardAttacked().getX()).remove(cardAttacked);
         }
         cardAttacker.setHasAttackedThisTurn(true);
+    }
+
+    private void useAttackHero(ArrayNode output, Action action, Player attackedPlayer) {
+        MinionCard cardAttacker = this.getGameTable().get(action.getCardAttacker().getX()).get(action.getCardAttacker().getY());
+
+        if (cardAttacker.isFrozen()) {
+            output.add(ErrorOutput.attackHeroCardIsFrozen(action));
+            return;
+        }
+
+        if (cardAttacker.hasAttackedThisTurn()) {
+            output.add(ErrorOutput.attackHeroCardAlreadyAttacked(action));
+            return;
+        }
+
+        if (attackedPlayer.hasTankOnTable()) {
+            output.add(ErrorOutput.attackHeroCardNotTank(action));
+            return;
+        }
+
+        attackedPlayer.getHeroCard().setHealth(attackedPlayer.getHeroCard().getHealth() - cardAttacker.getAttackDamage());
+        cardAttacker.setHasAttackedThisTurn(true);
+        if (attackedPlayer.getHeroCard().getHealth() <= 0) {
+            this.setEnded(true);
+            if (this.getPlayerTurn() == 1) {
+                output.add(OutputHelper.playerOneWin());
+            } else {
+                output.add(OutputHelper.playerTwoWin());
+            }
+        }
+    }
+
+    private void useHeroAbility(ArrayNode output, Action action, Player attackingPlayer) {
+        int frontRow = this.getPlayerTurn() == 1 ? 2 : 1;
+        int backRow = this.getPlayerTurn() == 1 ? 3 : 0;
+
+        if (attackingPlayer.getMana() < attackingPlayer.getHeroCard().getMana()) {
+            output.add(ErrorOutput.heroAbilityNotEnoughMana(action));
+            return;
+        }
+
+        if (attackingPlayer.getHeroCard().hasAttackedThisTurn()) {
+            output.add(ErrorOutput.heroAbilityAlreadyAttacked(action));
+            return;
+        }
+
+        if (attackingPlayer.getHeroCard().getName().equals("Lord Royce")
+                || attackingPlayer.getHeroCard().getName().equals("Empress Thorina")) {
+            if (action.getAffectedRow() == frontRow || action.getAffectedRow() == backRow) {
+                output.add(ErrorOutput.heroAbilityNotEnemyRow(action));
+                return;
+            }
+        }
+
+        if (attackingPlayer.getHeroCard().getName().equals("General Kocioraw")
+                || attackingPlayer.getHeroCard().getName().equals("King Mudface")) {
+            if (action.getAffectedRow() != frontRow && action.getAffectedRow() != backRow) {
+                output.add(ErrorOutput.heroAbilityNotOwnRow(action));
+                return;
+            }
+        }
+
+        attackingPlayer.getHeroCard().useAbility(this.getGameTable().get(action.getAffectedRow()));
+        attackingPlayer.getHeroCard().setHasAttackedThisTurn(true);
+        attackingPlayer.setMana(attackingPlayer.getMana() - attackingPlayer.getHeroCard().getMana());
     }
 
     private void executeCommand(ArrayNode output, Action action) {
@@ -368,6 +444,20 @@ public class CurrentGame {
                     this.cardUsesAbility(output, action, this.getPlayerOne());
                 }
                 break;
+            case "useAttackHero":
+                if (this.getPlayerTurn() == 1) {
+                    this.useAttackHero(output, action, this.getPlayerTwo());
+                } else {
+                    this.useAttackHero(output, action, this.getPlayerOne());
+                }
+                break;
+            case "useHeroAbility":
+                if (this.getPlayerTurn() == 1) {
+                    this.useHeroAbility(output, action, this.getPlayerOne());
+                } else {
+                    this.useHeroAbility(output, action, this.getPlayerTwo());
+                }
+                break;
         }
     }
 
@@ -406,8 +496,9 @@ public class CurrentGame {
     public void startCurrentGame(ArrayNode output) {
         for (Action action : this.getActions()) {
             this.executeCommand(output, action);
-
-            this.nextRound(output);
+            if (!(this.isEnded())) {
+                this.nextRound(output);
+            }
         }
     }
 }

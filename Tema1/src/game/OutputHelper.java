@@ -126,4 +126,18 @@ public class OutputHelper {
 
         return node;
     }
+
+    static public ObjectNode playerOneWin() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("gameEnded", "Player one killed the enemy hero.");
+        return node;
+    }
+
+    static public ObjectNode playerTwoWin() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("gameEnded", "Player two killed the enemy hero.");
+        return node;
+    }
 }

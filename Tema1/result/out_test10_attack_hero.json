@@ -50,7 +50,7 @@
   "playerIdx" : 1,
   "output" : {
     "mana" : 3,
-    "health" : 30,
+    "health" : 25,
     "description" : "Standard card: Absolute order, a soldier must devote his life to his General.",
     "colors" : [ "Red", "Black", "Purple" ],
     "name" : "General Kocioraw"
@@ -60,7 +60,7 @@
   "playerIdx" : 2,
   "output" : {
     "mana" : 3,
-    "health" : 30,
+    "health" : 24,
     "description" : "Premium card: Glory to all we see, glory to all he is, glory to everyone who will try to escape him.",
     "colors" : [ "Black", "Red", "Grey" ],
     "name" : "Lord Royce"
@@ -117,7 +117,7 @@
   "playerIdx" : 1,
   "output" : {
     "mana" : 3,
-    "health" : 30,
+    "health" : 20,
     "description" : "Standard card: Absolute order, a soldier must devote his life to his General.",
     "colors" : [ "Red", "Black", "Purple" ],
     "name" : "General Kocioraw"
@@ -127,11 +127,13 @@
   "playerIdx" : 2,
   "output" : {
     "mana" : 3,
-    "health" : 30,
+    "health" : 12,
     "description" : "Premium card: Glory to all we see, glory to all he is, glory to everyone who will try to escape him.",
     "colors" : [ "Black", "Red", "Grey" ],
     "name" : "Lord Royce"
   }
+}, {
+  "gameEnded" : "Player one killed the enemy hero."
 }, {
   "command" : "getPlayerMana",
   "playerIdx" : 1,
