@@ -17,26 +17,30 @@ public class CurrentGame {
     private int manaForEachRound = 1;
     private int roundNumber = 1;
     private boolean isEnded = false;
+    private int gamesPlayedUntilNow;
 
-    public CurrentGame(Input inputData) {
-        this.setStartingPlayer(inputData.getGames().get(0).getStartGame().getStartingPlayer());
-        this.setShuffleSeed(inputData.getGames().get(0).getStartGame().getShuffleSeed());
+    public CurrentGame(Input inputData, int gameIndex, int gamesPlayedUntilNow, int playerOneNumberOfWins, int playerTwoNumberOfWins) {
+        this.setStartingPlayer(inputData.getGames().get(gameIndex).getStartGame().getStartingPlayer());
+        this.setShuffleSeed(inputData.getGames().get(gameIndex).getStartGame().getShuffleSeed());
         this.setPlayerOne(new Player());
         this.getPlayerOne().setDecks(inputData.getPlayerOneDecks().getDecks());
         this.setPlayerTwo(new Player());
         this.getPlayerTwo().setDecks(inputData.getPlayerTwoDecks().getDecks());
-        this.getPlayerOne().setCurrentDeckAtIndex(inputData.getGames().get(0).getStartGame().getPlayerOneDeckIdx(), this.getShuffleSeed());
-        this.getPlayerTwo().setCurrentDeckAtIndex(inputData.getGames().get(0).getStartGame().getPlayerTwoDeckIdx(), this.getShuffleSeed());
-        this.getPlayerOne().setHeroCard(inputData.getGames().get(0).getStartGame().getPlayerOneHero());
-        this.getPlayerTwo().setHeroCard(inputData.getGames().get(0).getStartGame().getPlayerTwoHero());
+        this.getPlayerOne().setCurrentDeckAtIndex(inputData.getGames().get(gameIndex).getStartGame().getPlayerOneDeckIdx(), this.getShuffleSeed());
+        this.getPlayerTwo().setCurrentDeckAtIndex(inputData.getGames().get(gameIndex).getStartGame().getPlayerTwoDeckIdx(), this.getShuffleSeed());
+        this.getPlayerOne().setHeroCard(inputData.getGames().get(gameIndex).getStartGame().getPlayerOneHero());
+        this.getPlayerTwo().setHeroCard(inputData.getGames().get(gameIndex).getStartGame().getPlayerTwoHero());
         this.setGameTable(new ArrayList<ArrayList<MinionCard>>());
         for (int counter = 0; counter < 4; counter++) {
             this.getGameTable().add(new ArrayList<MinionCard>());
         }
         this.setActions(new ArrayList<Action>());
-        for (ActionsInput actionInput : inputData.getGames().get(0).getActions()) {
+        for (ActionsInput actionInput : inputData.getGames().get(gameIndex).getActions()) {
             this.actions.add(new Action(actionInput));
         }
+        this.gamesPlayedUntilNow = gamesPlayedUntilNow;
+        this.getPlayerOne().setNumberOfWins(playerOneNumberOfWins);
+        this.getPlayerTwo().setNumberOfWins(playerTwoNumberOfWins);
     }
 
     public ArrayList<ArrayList<MinionCard>> getGameTable() {
@@ -118,6 +122,14 @@ public class CurrentGame {
 
     public void setEnded(boolean ended) {
         this.isEnded = ended;
+    }
+
+    public int getGamesPlayedUntilNow() {
+        return gamesPlayedUntilNow;
+    }
+
+    public void setGamesPlayedUntilNow(int gamesPlayedUntilNow) {
+        this.gamesPlayedUntilNow = gamesPlayedUntilNow;
     }
 
     private void placeCard(ArrayNode output, Action action, Player player) {
@@ -319,8 +331,12 @@ public class CurrentGame {
             this.setEnded(true);
             if (this.getPlayerTurn() == 1) {
                 output.add(OutputHelper.playerOneWin());
+                this.getPlayerOne().setNumberOfWins(this.getPlayerOne().getNumberOfWins() + 1);
+                this.setGamesPlayedUntilNow(this.getGamesPlayedUntilNow() + 1);
             } else {
                 output.add(OutputHelper.playerTwoWin());
+                this.getPlayerTwo().setNumberOfWins(this.getPlayerTwo().getNumberOfWins() + 1);
+                this.setGamesPlayedUntilNow(this.getGamesPlayedUntilNow() + 1);
             }
         }
     }
@@ -457,6 +473,15 @@ public class CurrentGame {
                 } else {
                     this.useHeroAbility(output, action, this.getPlayerTwo());
                 }
+                break;
+            case "getTotalGamesPlayed":
+                output.add(OutputHelper.getTotalGamesPlayed(this.getGamesPlayedUntilNow()));
+                break;
+            case "getPlayerOneWins":
+                output.add(OutputHelper.getPlayerOneWins(this.getPlayerOne().getNumberOfWins()));
+                break;
+            case "getPlayerTwoWins":
+                output.add(OutputHelper.getPlayerTwoWins(this.getPlayerTwo().getNumberOfWins()));
                 break;
         }
     }

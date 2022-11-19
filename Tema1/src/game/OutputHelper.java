@@ -140,4 +140,31 @@ public class OutputHelper {
         node.put("gameEnded", "Player two killed the enemy hero.");
         return node;
     }
+
+    static public ObjectNode getTotalGamesPlayed(int gamesPlayedUntilNow) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("command", "getTotalGamesPlayed");
+        node.put("output", gamesPlayedUntilNow);
+
+        return node;
+    }
+
+    static public ObjectNode getPlayerOneWins(int playerOneNumberOfWins) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("command", "getPlayerOneWins");
+        node.put("output", playerOneNumberOfWins);
+
+        return node;
+    }
+
+    static public ObjectNode getPlayerTwoWins(int playerTwoNumberOfWins) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode node = objectMapper.createObjectNode();
+        node.put("command", "getPlayerTwoWins");
+        node.put("output", playerTwoNumberOfWins);
+
+        return node;
+    }
 }

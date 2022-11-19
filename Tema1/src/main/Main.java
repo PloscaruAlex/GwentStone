@@ -72,12 +72,18 @@ public final class Main {
 
         ArrayNode output = objectMapper.createArrayNode();
 
-        //TODO add here the entry point to your implementation
-
         //creating the current game
-        CurrentGame currentGame = new CurrentGame(inputData);
+        int gamesPlayedUntilNow = 0;
+        int playerOneNumberOfWins = 0;
+        int playerTwoNumberOfWins = 0;
+        for (int gameIndex = 0; gameIndex < inputData.getGames().size(); gameIndex++) {
+            CurrentGame currentGame = new CurrentGame(inputData, gameIndex, gamesPlayedUntilNow, playerOneNumberOfWins, playerTwoNumberOfWins);
 
-        currentGame.startCurrentGame(output);
+            currentGame.startCurrentGame(output);
+            playerOneNumberOfWins = currentGame.getPlayerOne().getNumberOfWins();
+            playerTwoNumberOfWins = currentGame.getPlayerTwo().getNumberOfWins();
+            gamesPlayedUntilNow++;
+        }
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), output);

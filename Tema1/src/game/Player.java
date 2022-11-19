@@ -14,6 +14,7 @@ public class Player {
     private int mana;
     private boolean isTurnEnded = false;
     private boolean hasTankOnTable = false;
+    private int numberOfWins;
 
     public boolean hasTankOnTable() {
         return hasTankOnTable;
@@ -61,6 +62,14 @@ public class Player {
 
     public void setCurrentDeck(ArrayList<Card> currentDeck) {
         this.currentDeck = currentDeck;
+    }
+
+    public int getNumberOfWins() {
+        return numberOfWins;
+    }
+
+    public void setNumberOfWins(int numberOfWins) {
+        this.numberOfWins = numberOfWins;
     }
 
     public void setHeroCard(CardInput hero) {
