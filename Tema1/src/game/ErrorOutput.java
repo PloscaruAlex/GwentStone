@@ -3,7 +3,14 @@ package game;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+/**
+ * Helper class to help me display errors.
+ */
 public class ErrorOutput {
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode environmentCardPlace(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -14,6 +21,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode notEnoughMana(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -24,6 +35,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode rowIsFull(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -34,6 +49,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode noCardAtPosition(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -45,6 +64,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode cardNotEnvironment(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -56,6 +79,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode notEnoughManaEnvironment(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -67,6 +94,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode notEnemyRow(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -78,6 +109,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode cannotSteal(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -89,6 +124,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode attackedOwnCard(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -108,6 +147,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode cardAlreadyAttacked(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -127,6 +170,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode cardIsFrozen(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -146,6 +193,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode cardNotTank(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -165,6 +216,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode attackedEnemyCard(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -184,6 +239,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode attackHeroCardIsFrozen(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -199,6 +258,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode attackHeroCardAlreadyAttacked(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -214,6 +277,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode attackHeroCardNotTank(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -229,6 +296,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode heroAbilityNotEnoughMana(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -240,6 +311,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode heroAbilityAlreadyAttacked(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -251,6 +326,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode heroAbilityNotEnemyRow(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();
@@ -262,6 +341,10 @@ public class ErrorOutput {
         return err;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode heroAbilityNotOwnRow(final Action action) {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode err = objectMapper.createObjectNode();

@@ -10,6 +10,13 @@ import elements.Player;
 
 import java.util.ArrayList;
 
+/**
+ * This class contains all the functionality for the current game,
+ * displaying, playing, functions, statistics. It is the most important
+ * class in this project and I didn't find a way to break it down into
+ * smaller classes because all the content inside here is related and
+ * wouldn't function separately.
+ */
 public final class CurrentGame {
     private Player playerOne;
     private Player playerTwo;
@@ -23,6 +30,7 @@ public final class CurrentGame {
     private boolean isEnded = false;
     private int gamesPlayedUntilNow;
 
+    //current game constructor, getting all the info from the input
     public CurrentGame(
             final Input inputData,
             final int gameIndex,
@@ -38,6 +46,7 @@ public final class CurrentGame {
         this.getPlayerOne().setDecks(inputData.getPlayerOneDecks().getDecks());
         this.setPlayerTwo(new Player());
         this.getPlayerTwo().setDecks(inputData.getPlayerTwoDecks().getDecks());
+
         this.getPlayerOne().setCurrentDeckAtIndex(
                 inputData.getGames().get(gameIndex).getStartGame().getPlayerOneDeckIdx(),
                 this.getShuffleSeed()
@@ -52,6 +61,7 @@ public final class CurrentGame {
         this.getPlayerTwo().setHeroCard(
                 inputData.getGames().get(gameIndex).getStartGame().getPlayerTwoHero()
         );
+
         this.setGameTable(new ArrayList<ArrayList<MinionCard>>());
         for (int counter = 0; counter < 4; counter++) {
             this.getGameTable().add(new ArrayList<MinionCard>());
@@ -60,6 +70,7 @@ public final class CurrentGame {
         for (ActionsInput actionInput : inputData.getGames().get(gameIndex).getActions()) {
             this.actions.add(new Action(actionInput));
         }
+
         this.gamesPlayedUntilNow = gamesPlayedUntilNow;
         this.getPlayerOne().setNumberOfWins(playerOneNumberOfWins);
         this.getPlayerTwo().setNumberOfWins(playerTwoNumberOfWins);
@@ -69,7 +80,7 @@ public final class CurrentGame {
     }
 
     public ArrayList<ArrayList<MinionCard>> getGameTable() {
-        return gameTable;
+        return this.gameTable;
     }
 
     public void setGameTable(final ArrayList<ArrayList<MinionCard>> gameTable) {
@@ -77,7 +88,7 @@ public final class CurrentGame {
     }
 
     public int getShuffleSeed() {
-        return shuffleSeed;
+        return this.shuffleSeed;
     }
 
     public void setShuffleSeed(final int shuffleSeed) {
@@ -85,7 +96,7 @@ public final class CurrentGame {
     }
 
     public int getPlayerTurn() {
-        return playerTurn;
+        return this.playerTurn;
     }
 
     public void setPlayerTurn(final int playerTurn) {
@@ -93,7 +104,7 @@ public final class CurrentGame {
     }
 
     public Player getPlayerOne() {
-        return playerOne;
+        return this.playerOne;
     }
 
     public void setPlayerOne(final Player playerOne) {
@@ -101,7 +112,7 @@ public final class CurrentGame {
     }
 
     public Player getPlayerTwo() {
-        return playerTwo;
+        return this.playerTwo;
     }
 
     public void setPlayerTwo(final Player playerTwo) {
@@ -109,16 +120,20 @@ public final class CurrentGame {
     }
 
     public int getStartingPlayer() {
-        return startingPlayer;
+        return this.startingPlayer;
     }
 
+    /**
+     * setting the starting player and also setting the player's turn.
+     * @param startingPlayer which player starts the game.
+     */
     public void setStartingPlayer(final int startingPlayer) {
         this.startingPlayer = startingPlayer;
         this.playerTurn = startingPlayer;
     }
 
     public ArrayList<Action> getActions() {
-        return actions;
+        return this.actions;
     }
 
     public void setActions(final ArrayList<Action> actions) {
@@ -126,7 +141,7 @@ public final class CurrentGame {
     }
 
     public int getManaForEachRound() {
-        return manaForEachRound;
+        return this.manaForEachRound;
     }
 
     public void setManaForEachRound(final int manaForEachRound) {
@@ -134,7 +149,7 @@ public final class CurrentGame {
     }
 
     public int getRoundNumber() {
-        return roundNumber;
+        return this.roundNumber;
     }
 
     public void setRoundNumber(final int roundNumber) {
@@ -150,13 +165,21 @@ public final class CurrentGame {
     }
 
     public int getGamesPlayedUntilNow() {
-        return gamesPlayedUntilNow;
+        return this.gamesPlayedUntilNow;
     }
 
     public void setGamesPlayedUntilNow(final int gamesPlayedUntilNow) {
         this.gamesPlayedUntilNow = gamesPlayedUntilNow;
     }
 
+    /**
+     * Function that places a card on the game table.
+     * Implemented here because it is related to the current game's table and
+     * the current player.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     * @param player the player that places the card.
+     */
     private void placeCard(final ArrayNode output, final Action action, final Player player) {
         Card cardToBePlaced = player.getHand().get(action.getHandIdx());
         if (cardToBePlaced.getType() == Card.Type.ENVIRONMENT) {
@@ -164,6 +187,7 @@ public final class CurrentGame {
             return;
         }
 
+        //cast the card to minion type
         MinionCard minionToBePlaced = (MinionCard) cardToBePlaced;
         if (minionToBePlaced.getMana() > player.getMana()) {
             output.add(ErrorOutput.notEnoughMana(action));
@@ -196,6 +220,14 @@ public final class CurrentGame {
         }
     }
 
+    /**
+     * Function that uses an environment card on the game table.
+     * Implemented here because it is related to the current game's table and
+     * the attacked player.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     * @param player the player that places the card.
+     */
     private void useEnvironmentCard(
             final ArrayNode output,
             final Action action,
@@ -206,6 +238,8 @@ public final class CurrentGame {
             output.add(ErrorOutput.cardNotEnvironment(action));
             return;
         }
+
+        //cast the card to environment type
         EnvironmentCard environmentToBeUsed = (EnvironmentCard) cardToBeUsed;
         if (environmentToBeUsed.getMana() > player.getMana()) {
             output.add(ErrorOutput.notEnoughManaEnvironment(action));
@@ -230,6 +264,9 @@ public final class CurrentGame {
         }
     }
 
+    /**
+     * Function that ends this player turn, unfreezes all the cards and resets card attacks.
+     */
     private void endPlayerTurn() {
         if (this.getPlayerTurn() == 1) {
             this.getPlayerOne().setTurnEnded(true);
@@ -258,6 +295,14 @@ public final class CurrentGame {
         }
     }
 
+    /**
+     * Function that uses a card's attack on another card.
+     * Implemented here because it is related to the current game's table and
+     * both players.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     * @param attackedPlayer the player which is attacked.
+     */
     private void cardUsesAttack(
             final ArrayNode output,
             final Action action,
@@ -302,6 +347,14 @@ public final class CurrentGame {
         cardAttacker.setHasAttackedThisTurn(true);
     }
 
+    /**
+     * Function that uses a card's ability on another card.
+     * Implemented here because it is related to the current game's table and
+     * both players.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     * @param attackedPlayer the player which is attacked.
+     */
     private void cardUsesAbility(
             final ArrayNode output,
             final Action action,
@@ -355,6 +408,14 @@ public final class CurrentGame {
         cardAttacker.setHasAttackedThisTurn(true);
     }
 
+    /**
+     * Function that uses a card's attack on the other player's hero.
+     * Implemented here because it is related to the current game's table and
+     * the attacked player.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     * @param attackedPlayer the player which is attacked.
+     */
     private void useAttackHero(
             final ArrayNode output,
             final Action action,
@@ -395,6 +456,14 @@ public final class CurrentGame {
         }
     }
 
+    /**
+     * Function that uses a hero's ability on the game table.
+     * Implemented here because it is related to the current game's table and
+     * the attacked player.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     * @param attackingPlayer the player which uses his hero's ability on the other player.
+     */
     private void useHeroAbility(
             final ArrayNode output,
             final Action action,
@@ -436,6 +505,12 @@ public final class CurrentGame {
                 attackingPlayer.getMana() - attackingPlayer.getHeroCard().getMana());
     }
 
+    /**
+     * The brain of the project, the parsing and executing commands, output
+     * and most of the functionality.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     */
     private void executeCommand(final ArrayNode output, final Action action) {
         switch (action.getCommand()) {
             case "getPlayerDeck":
@@ -556,6 +631,10 @@ public final class CurrentGame {
         }
     }
 
+    /**
+     * Function to determine if the round is over.
+     * If it is, give each player mana and one more card in hand.
+     */
     private void nextRound() {
         if (this.getPlayerOne().isTurnEnded() && this.getPlayerTwo().isTurnEnded()) {
             this.setRoundNumber(this.getRoundNumber() + 1);
@@ -594,6 +673,11 @@ public final class CurrentGame {
         }
     }
 
+    /**
+     * Function that is the entry point for all the other ones, this one starts
+     * the current game.
+     * @param output the principal ObjectNode used for output.
+     */
     public void startCurrentGame(final ArrayNode output) {
         for (Action action : this.getActions()) {
             this.executeCommand(output, action);

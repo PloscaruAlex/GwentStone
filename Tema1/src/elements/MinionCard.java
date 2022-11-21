@@ -4,7 +4,11 @@ import fileio.CardInput;
 
 import java.util.ArrayList;
 
+/**
+ * Card of type minion, which is placed on the game table.
+ */
 public final class MinionCard extends Card {
+    //a place to keep information about the row that a specific minion should be placed on
     public enum Row {
         FRONT,
         BACK
@@ -43,7 +47,7 @@ public final class MinionCard extends Card {
 
     @Override
     public Type getType() {
-        return type;
+        return this.type;
     }
 
     @Override
@@ -67,14 +71,23 @@ public final class MinionCard extends Card {
         this.isTank = tank;
     }
 
+    /**
+     * getter for hasAttackedThisTurn member, only it is boolean, so the name is changed
+     * from a traditional getter.
+     * @return true if this card has already attacked this turn, false otherwise.
+     */
     public boolean hasAttackedThisTurn() {
-        return hasAttackedThisTurn;
+        return this.hasAttackedThisTurn;
     }
 
     public void setHasAttackedThisTurn(final boolean hasAttackedThisTurn) {
         this.hasAttackedThisTurn = hasAttackedThisTurn;
     }
 
+    /**
+     * copy all the data about this card from the card given as input.
+     * @param card the card given as input.
+     */
     @Override
     public void copyFromCardInput(final CardInput card) {
         this.setName(new String(card.getName()));
@@ -99,6 +112,10 @@ public final class MinionCard extends Card {
         }
     }
 
+    /**
+     * function that implements how a card of type minion should use its ability.
+     * @param card the card affected by this card's ability.
+     */
     public void useAbility(final MinionCard card) {
         int temporary;
         switch (this.getName()) {

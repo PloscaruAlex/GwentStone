@@ -9,11 +9,21 @@ import elements.MinionCard;
 
 import java.util.ArrayList;
 
+/**
+ * Helper class to help me display the output of the game.
+ */
 public class OutputHelper {
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param currentDeck the deck of the specified player.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getPlayerDeck(final Action action,
                                            final ArrayList<Card> currentDeck) {
-        //make new object here so i don't have to pass it by
-        //parameter and it is collected by the garbage collector
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -27,7 +37,16 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param heroCard the hero card of the specified player.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getPlayerHero(final Action action, final HeroCard heroCard) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -37,7 +56,16 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param playerTurn the current game player's turn.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getPlayerTurn(final Action action, final int playerTurn) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -46,7 +74,16 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param hand the array of cards representing the player's hand.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getCardsInHand(final Action action, final ArrayList<Card> hand) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -60,7 +97,16 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param mana the mana of the specified player.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getPlayerMana(final Action action, final int mana) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -70,8 +116,17 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param gameTable the current game's table.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getCardsOnTable(final Action action,
                                              final ArrayList<ArrayList<MinionCard>> gameTable) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         ArrayNode table = objectMapper.createArrayNode();
@@ -89,8 +144,17 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param hand the array of cards representing the player's hand.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getEnvironmentCardsInHand(final Action action,
                                                        final ArrayList<Card> hand) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -106,8 +170,17 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param gameTable the current game's table.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getCardAtPosition(final Action action,
                                                final ArrayList<ArrayList<MinionCard>> gameTable) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", action.getCommand());
@@ -119,8 +192,17 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param action Current action of the game, given as input, used for displaying parameters.
+     * @param gameTable the current game's table.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getFrozenCardsOnTable(
             final Action action, final ArrayList<ArrayList<MinionCard>> gameTable) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         ArrayNode frozenCards = objectMapper.createArrayNode();
@@ -137,21 +219,45 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * display this message if player one wins.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode playerOneWin() {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("gameEnded", "Player one killed the enemy hero.");
         return node;
     }
 
+    /**
+     * display this message if player two wins.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode playerTwoWin() {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("gameEnded", "Player two killed the enemy hero.");
         return node;
     }
 
+    /**
+     * @param gamesPlayedUntilNow number of games played, used for statistics.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getTotalGamesPlayed(final int gamesPlayedUntilNow) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", "getTotalGamesPlayed");
@@ -160,7 +266,15 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param playerOneNumberOfWins how many times player one won.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getPlayerOneWins(final int playerOneNumberOfWins) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", "getPlayerOneWins");
@@ -169,7 +283,15 @@ public class OutputHelper {
         return node;
     }
 
+    /**
+     * @param playerTwoNumberOfWins how many times player two won.
+     * @return the ObjectNode that will be added to output.
+     */
     public static ObjectNode getPlayerTwoWins(final int playerTwoNumberOfWins) {
+        /*
+        make new object here so i don't have to pass it by
+        parameter and it is collected by the garbage collector
+        */
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode node = objectMapper.createObjectNode();
         node.put("command", "getPlayerTwoWins");

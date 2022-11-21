@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Random;
 import static java.util.Collections.shuffle;
 
+/**
+ * Class for creating the player element of this game, with its attributes.
+ */
 public final class Player {
     private HeroCard heroCard;
     private ArrayList<ArrayList<Card>> decks;
@@ -16,8 +19,13 @@ public final class Player {
     private boolean hasTankOnTable = false;
     private int numberOfWins;
 
+    /**
+     * getter for hasTankOnTable member, only it is boolean, so the name is changed
+     * from a traditional getter.
+     * @return true if this player has a tank placed on the table, false otherwise.
+     */
     public boolean hasTankOnTable() {
-        return hasTankOnTable;
+        return this.hasTankOnTable;
     }
 
     public void setHasTankOnTable(final boolean hasTankOnTable) {
@@ -25,15 +33,15 @@ public final class Player {
     }
 
     public boolean isTurnEnded() {
-        return isTurnEnded;
+        return this.isTurnEnded;
     }
 
     public void setTurnEnded(final boolean turnEnded) {
-        isTurnEnded = turnEnded;
+        this.isTurnEnded = turnEnded;
     }
 
     public int getMana() {
-        return mana;
+        return this.mana;
     }
 
     public void setMana(final int mana) {
@@ -41,34 +49,42 @@ public final class Player {
     }
 
     public ArrayList<Card> getHand() {
-        return hand;
+        return this.hand;
     }
 
     public HeroCard getHeroCard() {
-        return heroCard;
+        return this.heroCard;
     }
 
     public ArrayList<ArrayList<Card>> getDecks() {
-        return decks;
+        return this.decks;
     }
 
     public ArrayList<Card> getCurrentDeck() {
-        return currentDeck;
+        return this.currentDeck;
     }
 
     public int getNumberOfWins() {
-        return numberOfWins;
+        return this.numberOfWins;
     }
 
     public void setNumberOfWins(final int numberOfWins) {
         this.numberOfWins = numberOfWins;
     }
 
+    /**
+     * untraditional setter, copy data about the hero card
+     * @param hero hero card input
+     */
     public void setHeroCard(final CardInput hero) {
         this.heroCard = new HeroCard();
         this.heroCard.copyFromCardInput(hero);
     }
 
+    /**
+     * untraditional setter, copy all the data about the player's decks
+     * @param decks deck input
+     */
     public void setDecks(final ArrayList<ArrayList<CardInput>> decks) {
         this.decks = new ArrayList<ArrayList<Card>>();
         for (ArrayList<CardInput> deck : decks) {
@@ -90,12 +106,19 @@ public final class Player {
         }
     }
 
+    /**
+     * function that sets the current deck from the list of all the player's decks.
+     * @param index index of the current deck to be played in the current game.
+     * @param shuffle the seed for shuffling the cards.
+     */
     public void setCurrentDeckAtIndex(final int index, final int shuffle) {
         this.currentDeck = this.getDecks().get(index);
         Random random = new Random();
         random.setSeed(shuffle);
         shuffle(this.currentDeck, random);
         this.hand = new ArrayList<Card>();
+
+        //also put the first card in the player's hand
         if (this.currentDeck.get(0).getType() == Card.Type.ENVIRONMENT) {
             this.hand.add(new EnvironmentCard(this.currentDeck.get(0)));
         } else {

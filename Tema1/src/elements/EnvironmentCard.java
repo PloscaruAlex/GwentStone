@@ -8,6 +8,9 @@ import game.ErrorOutput;
 
 import java.util.ArrayList;
 
+/**
+ * Card of type environment, with special abilities to be used on the game table.
+ */
 public final class EnvironmentCard extends Card {
     private Type type = Type.ENVIRONMENT;
 
@@ -23,7 +26,7 @@ public final class EnvironmentCard extends Card {
 
     @Override
     public Type getType() {
-        return type;
+        return this.type;
     }
 
     @Override
@@ -31,6 +34,12 @@ public final class EnvironmentCard extends Card {
         this.type = type;
     }
 
+    /**
+     * function to override the output from the main card class.
+     * output like the main card class, without the attackDamage, attributes.
+     * @param objectMapper for creating the ObjectNode given to the output.
+     * @return the node which will be added to the final output.
+     */
     @Override
     public ObjectNode cardOutput(final ObjectMapper objectMapper) {
         ObjectNode objectNode = objectMapper.createObjectNode();
@@ -46,6 +55,13 @@ public final class EnvironmentCard extends Card {
         return objectNode;
     }
 
+    /**
+     * function that implements how a card of type environment should use its ability.
+     * @param output the principal ObjectNode used for output.
+     * @param action the current action of the game.
+     * @param gameTable current game's table.
+     * @return 0 if the card was used successfully, 1 if the card was not used.
+     */
     public int useEnvironmentAbility(
             final ArrayNode output,
             final Action action,

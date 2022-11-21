@@ -3,6 +3,9 @@ package game;
 import fileio.ActionsInput;
 import fileio.Coordinates;
 
+/**
+ * My own class for handling the actions from the input.
+ */
 public final class Action {
     private String command;
     private int playerIdx;
@@ -13,6 +16,7 @@ public final class Action {
     private Coordinates cardAttacker;
     private Coordinates cardAttacked;
 
+    //action constructor, copy all the data from the input class
     public Action(final ActionsInput action) {
         this.command = new String(action.getCommand());
         this.playerIdx = action.getPlayerIdx();
@@ -25,7 +29,7 @@ public final class Action {
     }
 
     public int getHandIdx() {
-        return handIdx;
+        return this.handIdx;
     }
 
     public void setHandIdx(final int handIdx) {
@@ -33,7 +37,7 @@ public final class Action {
     }
 
     public String getCommand() {
-        return command;
+        return this.command;
     }
 
     public void setCommand(final String command) {
@@ -41,7 +45,7 @@ public final class Action {
     }
 
     public int getPlayerIdx() {
-        return playerIdx;
+        return this.playerIdx;
     }
 
     public void setPlayerIdx(final int playerIdx) {
@@ -49,7 +53,7 @@ public final class Action {
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public void setX(final int x) {
@@ -57,7 +61,7 @@ public final class Action {
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(final int y) {
@@ -65,7 +69,7 @@ public final class Action {
     }
 
     public int getAffectedRow() {
-        return affectedRow;
+        return this.affectedRow;
     }
 
     public void setAffectedRow(final int affectedRow) {
@@ -73,7 +77,7 @@ public final class Action {
     }
 
     public Coordinates getCardAttacker() {
-        return cardAttacker;
+        return this.cardAttacker;
     }
 
     public void setCardAttacker(final Coordinates cardAttacker) {
@@ -81,7 +85,7 @@ public final class Action {
     }
 
     public Coordinates getCardAttacked() {
-        return cardAttacked;
+        return this.cardAttacked;
     }
 
     public void setCardAttacked(final Coordinates cardAttacked) {

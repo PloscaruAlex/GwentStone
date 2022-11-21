@@ -71,12 +71,14 @@ public final class Main {
 
         ArrayNode output = objectMapper.createArrayNode();
 
-        //creating the current game
+        //variables used for statistics
         int gamesPlayedUntilNow = 0;
         int playerOneNumberOfWins = 0;
         int playerTwoNumberOfWins = 0;
 
+        //iterate through every game
         for (int gameIndex = 0; gameIndex < inputData.getGames().size(); gameIndex++) {
+            //create the current game
             CurrentGame currentGame = new CurrentGame(
                     inputData,
                     gameIndex,
@@ -84,8 +86,10 @@ public final class Main {
                     playerOneNumberOfWins,
                     playerTwoNumberOfWins
             );
+            //execute all the commands in the current game
             currentGame.startCurrentGame(output);
 
+            //update statistics
             playerOneNumberOfWins = currentGame.getPlayerOne().getNumberOfWins();
             playerTwoNumberOfWins = currentGame.getPlayerTwo().getNumberOfWins();
             gamesPlayedUntilNow++;
